@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mediavault/utils/helpers/file_helper.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
@@ -74,7 +74,7 @@ class FileFinderBloc extends Bloc<FileFinderEvent, FileFinderState> {
   _openFile(OpenFileFinderEvent event, Emitter<FileFinderState> emit) async {
     print(event.file.path);
     File oFile = await FileHelper()
-        .decryptFileRwa(event.file,dotenv.env['key32bit']??'');
+        .decryptFileRwa(event.file,'dotenv.env[key32bit]');
         print(oFile.path);
     OpenFilex.open(oFile.path);
   }

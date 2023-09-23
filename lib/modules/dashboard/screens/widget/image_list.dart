@@ -21,70 +21,35 @@ class ImageList extends StatelessWidget {
               itemCount: state.imagefiles.length,
               padding: const EdgeInsets.all(30),
               itemBuilder: (context, index) => Card(
-                child: Column(
-                  children: [
-                    Container(
-                      height: 120,
-                      width: double.infinity,
-                      child: Row(
-                        children: [
-                          Flexible(
-                            flex: 1,
-                            fit: FlexFit.tight,
-                            child: Image.file(
-                              File(state.imagefiles[index].path),
-                            ),
-                          ),
-                          Flexible(
-                              flex: 3,
-                              fit: FlexFit.tight,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  Text(
-                                      state.imagefiles[index].path
-                                          .split('/')
-                                          .last,
-                                      overflow: TextOverflow.ellipsis),
-                                  const Spacer(),
-                                  PopupMenuButton(
-                                    itemBuilder: (BuildContext context) =>
-                                        <PopupMenuEntry>[
-                                      PopupMenuItem(
-                                        onTap: () {
-                                          context.read<FileFinderBloc>().add(
-                                              OpenFileFinderEvent(
-                                                  state.imagefiles[index]));
-                                        },
-                                        value: 1,
-                                        child: const Text('Open'),
-                                      ),
-                                      PopupMenuItem(
-                                        onTap: () {},
-                                        value: 2,
-                                        child: const Text('Export'),
-                                      ),
-                                      PopupMenuItem(
-                                        onTap: () {
-                                          context.read<FileFinderBloc>().add(
-                                              DeleteFileFinderEvent(
-                                                  file:
-                                                      state.imagefiles[index]));
-                                        },
-                                        value: 3,
-                                        child: const Text('Delete'),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ))
-                        ],
+                child: ListTile(
+                  leading: const Icon(Icons.image),
+                  title: Text(state.videofiles[index].path.split('/').last),
+                  trailing: PopupMenuButton(
+                    itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                      PopupMenuItem(
+                        onTap: () {
+                          context.read<FileFinderBloc>().add(
+                              OpenFileFinderEvent(state.videofiles[index]));
+                        },
+                        value: 1,
+                        child: const Text('Open'),
                       ),
-                    ),
-                  ],
+                      PopupMenuItem(
+                        onTap: () {},
+                        value: 2,
+                        child: const Text('Export'),
+                      ),
+                      PopupMenuItem(
+                        onTap: () {
+                          context.read<FileFinderBloc>().add(
+                              DeleteFileFinderEvent(
+                                  file: state.videofiles[index]));
+                        },
+                        value: 3,
+                        child: const Text('Delete'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

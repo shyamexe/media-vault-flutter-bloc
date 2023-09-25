@@ -33,3 +33,23 @@ class DeleteFileFinderEvent extends FileFinderEvent {
   @override
   List<Object> get props => [file];
 }
+class DownloadFileFinderEvent extends FileFinderEvent {
+  final FileSystemEntity file;
+  const DownloadFileFinderEvent({
+    required this.file,
+  });
+
+  @override
+  List<Object> get props => [file];
+}
+class RenameFileFinderEvent extends FileFinderEvent {
+  final FileSystemEntity file;
+  final BuildContext context;
+  const RenameFileFinderEvent({
+    required this.file,
+    required this.context,
+  });
+
+  @override
+  List<Object> get props => [file,context];
+}

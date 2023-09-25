@@ -1,3 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +8,7 @@ import 'package:lottie/lottie.dart';
 import 'package:pdfx/pdfx.dart';
 
 import '../../logic/file_finder/file_finder_bloc.dart';
+import 'document_tile_widget.dart';
 
 class DocList extends StatelessWidget {
   const DocList({super.key});
@@ -30,41 +34,10 @@ class DocList extends StatelessWidget {
             child: ListView.builder(
               itemCount: state.docfiles.length,
               padding: const EdgeInsets.all(30),
-              itemBuilder: (context, index) => Card(
-                child: ListTile(
-                  leading: const Icon(Icons.image),
-                  title: Text(state.docfiles[index].path.split('/').last),
-                  trailing: PopupMenuButton(
-                    itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                      PopupMenuItem(
-                        onTap: () {
-                          context
-                              .read<FileFinderBloc>()
-                              .add(OpenFileFinderEvent(state.docfiles[index]));
-                        },
-                        value: 1,
-                        child: const Text('Open'),
-                      ),
-                      PopupMenuItem(
-                        onTap: () {},
-                        value: 2,
-                        child: const Text('Export'),
-                      ),
-                      PopupMenuItem(
-                        onTap: () {
-                          context.read<FileFinderBloc>().add(
-                              DeleteFileFinderEvent(
-                                  file: state.docfiles[index]));
-                        },
-                        value: 3,
-                        child: const Text('Delete'),
-                      ),
-                    ],
-                  ),
-                ),
+              itemBuilder: (context, index) => DocumentTileWidget(
+                file: state.docfiles[index],
               ),
-              ),
-            
+            ),
           );
         } else {
           return Center(

@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mediavault/modules/dashboard/logic/file_finder/file_finder_bloc.dart';
 
+import 'document_tile_widget.dart';
+
 class ImageList extends StatelessWidget {
   const ImageList({super.key});
 
@@ -20,38 +22,9 @@ class ImageList extends StatelessWidget {
             child: ListView.builder(
               itemCount: state.imagefiles.length,
               padding: const EdgeInsets.all(30),
-              itemBuilder: (context, index) => Card(
-                child: ListTile(
-                  leading: const Icon(Icons.image),
-                  title: Text(state.videofiles[index].path.split('/').last),
-                  trailing: PopupMenuButton(
-                    itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                      PopupMenuItem(
-                        onTap: () {
-                          context.read<FileFinderBloc>().add(
-                              OpenFileFinderEvent(state.videofiles[index]));
-                        },
-                        value: 1,
-                        child: const Text('Open'),
-                      ),
-                      PopupMenuItem(
-                        onTap: () {},
-                        value: 2,
-                        child: const Text('Export'),
-                      ),
-                      PopupMenuItem(
-                        onTap: () {
-                          context.read<FileFinderBloc>().add(
-                              DeleteFileFinderEvent(
-                                  file: state.videofiles[index]));
-                        },
-                        value: 3,
-                        child: const Text('Delete'),
-                      ),
-                    ],
-                  ),
+              itemBuilder: (context, index) => DocumentTileWidget(
+                  file: state.imagefiles[index],
                 ),
-              ),
             ),
           );
         } else {

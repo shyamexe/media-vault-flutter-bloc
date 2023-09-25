@@ -12,6 +12,19 @@ class FileHelper {
     );
     return result;
   }
+  Future<void> saveFileToDownloads( FileSystemEntity file) async {
+  // Get the path to the Downloads folder.
+  Directory? downloadsDirectory = await getDownloadsDirectory();
+
+  // Create a new file in the Downloads folder.
+  File ofile = File('${downloadsDirectory!.path}/${file.path.split('/').last}');
+
+  // Write the contents of the file to the file object.
+  await ofile.writeAsBytes(await File(file.path).readAsBytes());
+
+
+}
+
 
   // Future<String?> encryptFile(
   //     File file, String keyString, String folder, String fileName) async {

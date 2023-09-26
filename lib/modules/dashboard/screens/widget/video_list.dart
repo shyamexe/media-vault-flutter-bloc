@@ -23,6 +23,7 @@ class VideoList extends StatelessWidget {
               itemCount: state.videofiles.length,
               padding: const EdgeInsets.all(30),
               itemBuilder: (context, index) =>DocumentTileWidget(
+                icon: Icons.movie_creation_outlined,
                   file: state.videofiles[index],
                 ),
             ),

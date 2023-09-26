@@ -24,6 +24,7 @@ class ImageList extends StatelessWidget {
               padding: const EdgeInsets.all(30),
               itemBuilder: (context, index) => DocumentTileWidget(
                   file: state.imagefiles[index],
+                  icon: Icons.image_outlined,
                 ),
             ),
           ): Center(

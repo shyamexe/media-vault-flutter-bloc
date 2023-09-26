@@ -36,6 +36,7 @@ class DocList extends StatelessWidget {
                     padding: const EdgeInsets.all(30),
                     itemBuilder: (context, index) => DocumentTileWidget(
                       file: state.docfiles[index],
+                      icon: Icons.insert_drive_file_outlined,
                     ),
                   ),
                 )

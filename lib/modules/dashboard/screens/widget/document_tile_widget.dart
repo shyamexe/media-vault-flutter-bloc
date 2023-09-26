@@ -5,10 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mediavault/modules/dashboard/logic/file_finder/file_finder_bloc.dart';
 
 class DocumentTileWidget extends StatelessWidget {
+  final IconData icon;
   final FileSystemEntity file;
   const DocumentTileWidget({
     Key? key,
     required this.file,
+    required this.icon
   }) : super(key: key);
 
   @override
@@ -18,7 +20,7 @@ class DocumentTileWidget extends StatelessWidget {
         onTap: () {
           context.read<FileFinderBloc>().add(OpenFileFinderEvent(file));
         },
-        leading: const Icon(Icons.image),
+        leading:  Icon(icon),
         title: Text(file.path.split('/').last),
         trailing: PopupMenuButton(
           itemBuilder: (BuildContext context) => <PopupMenuEntry>[

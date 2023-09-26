@@ -5,7 +5,7 @@ sealed class FileFinderState extends Equatable {
   const FileFinderState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 final class FileFinderInitial extends FileFinderState {}
@@ -25,4 +25,12 @@ class FileFinderLoaded extends FileFinderState {
   List<Object> get props => [imagefiles,videofiles,docfiles];
 }
 
-final class FileFinderFailure extends FileFinderState {}
+class FileFinderFailure extends FileFinderState {
+  final String? error;
+  FileFinderFailure({
+    this.error,
+  });
+
+   @override
+  List<Object?> get props => [error];
+}

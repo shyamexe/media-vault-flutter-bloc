@@ -1,10 +1,14 @@
 import 'dart:io';
 
 import 'package:encrypt/encrypt.dart';
+import 'package:flutter/foundation.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:saf/saf.dart';
 
-class FileHelper {
+class FileHelper { 
+  Saf saf = Saf('/Download/');
   Future<FilePickerResult?> openFiles({required FileType type}) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: type,
@@ -12,19 +16,31 @@ class FileHelper {
     );
     return result;
   }
-  Future<void> saveFileToDownloads( FileSystemEntity file) async {
-  // Get the path to the Downloads folder.
-  Directory? downloadsDirectory = await getDownloadsDirectory();
 
-  // Create a new file in the Downloads folder.
-  File ofile = File('${downloadsDirectory!.path}/${file.path.split('/').last}');
+  Future<void> saveFileToDownloads(File file) async {
+    final permission = await Saf.getPersistedPermissionDirectories();
 
-  // Write the contents of the file to the file object.
-  await ofile.writeAsBytes(await File(file.path).readAsBytes());
+    if (permission?.isEmpty ?? true) {
+      await requestPermission();
+    }
+    print(permission);
 
+    File ofile = File('/storage/emulated/0/${permission!.first}/${file.path.split('/').last}');
 
-}
+    await ofile.writeAsBytes(await file.readAsBytes());
+  }
 
+  Future<void> requestPermission() async {
+    Permission.storage.request();
+
+    bool? isGranted = await saf.getDirectoryPermission(isDynamic: true);
+
+    if (isGranted != null && isGranted) {
+      // Perform some file operation
+    } else {
+      throw 'failed to get the permission';
+    }
+  }
 
   // Future<String?> encryptFile(
   //     File file, String keyString, String folder, String fileName) async {
@@ -90,7 +106,9 @@ class FileHelper {
       final directory = Directory(directoryPath);
       if (!(await directory.exists())) {
         await directory.create(recursive: true);
-        await encryptedFileOutput.writeAsBytes(await file.readAsBytes());
+        await encryptedFileOutput.writeAsBytes(
+          await file.readAsBytes(),
+        );
         return encryptedFilePath;
       } else {
         await encryptedFileOutput.writeAsBytes(await file.readAsBytes());

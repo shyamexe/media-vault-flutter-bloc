@@ -14,6 +14,8 @@ class EncriptBloc extends Bloc<EncriptEvent, EncriptState> {
     on<EncryptFilesEvent>((event, emit) async {
       try {
         emit(const EncriptLoading(title: null));
+
+        await Future.delayed(const Duration(seconds: 3));
         // final Directory directory = await getApplicationDocumentsDirectory();
 
         FilePickerResult? result =
@@ -24,7 +26,7 @@ class EncriptBloc extends Bloc<EncriptEvent, EncriptState> {
             final File tempFile = File(result.files[i].path!);
             await FileHelper().encryptFileRaw(
                 tempFile,
-                'dotenv.env[key32bit] ?? ''',
+                'dotenv.env[key32bit] ?? ' '',
                 event.type.name,
                 result.files[i].name);
             emit(EncriptLoading(

@@ -28,9 +28,9 @@ class FileFinderBloc extends Bloc<FileFinderEvent, FileFinderState> {
       emit(FileFinderFailure());
     }
   }
-  _downloadFiles(FileFinderEvent event, Emitter<FileFinderState> emit) async {
+  _downloadFiles(DownloadFileFinderEvent event, Emitter<FileFinderState> emit) async {
     try {
-      
+     await FileHelper().saveFileToDownloads(File(event.file.path));
     } catch (e) {
       emit(FileFinderFailure());
     }

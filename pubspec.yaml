@@ -43,7 +43,7 @@ dependencies:
   open_filex: ^4.3.2
   path_provider: ^2.1.1
   pdfx: ^2.4.0
-  permission_handler: ^11.0.0
+  permission_handler:
   saf: ^1.0.3+4
 
 dev_dependencies:

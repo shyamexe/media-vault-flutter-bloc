@@ -17,7 +17,7 @@ class FileHelper {
   }
 
   Future<void> saveFileToDownloads(File file) async {
-    final permission = await Saf.getPersistedPermissionDirectories();
+  var permission = await Saf.getPersistedPermissionDirectories();
 
     if (permission?.isEmpty ?? true) {
       await requestPermission();
@@ -25,6 +25,7 @@ class FileHelper {
     if (kDebugMode) {
       print(permission);
     }
+     permission = await Saf.getPersistedPermissionDirectories();
 
     File ofile = File('/storage/emulated/0/${permission!.first}/${file.path.split('/').last}');
 

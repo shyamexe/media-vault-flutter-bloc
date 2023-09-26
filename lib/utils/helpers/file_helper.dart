@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mediavault/utils/services/notification_service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:saf/saf.dart';
 
-class FileHelper { 
+class FileHelper {
   Saf saf = Saf('/Download/');
   Future<FilePickerResult?> openFiles({required FileType type}) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -17,7 +18,7 @@ class FileHelper {
   }
 
   Future<void> saveFileToDownloads(File file) async {
-  var permission = await Saf.getPersistedPermissionDirectories();
+    var permission = await Saf.getPersistedPermissionDirectories();
 
     if (permission?.isEmpty ?? true) {
       await requestPermission();
@@ -25,11 +26,18 @@ class FileHelper {
     if (kDebugMode) {
       print(permission);
     }
-     permission = await Saf.getPersistedPermissionDirectories();
+    permission = await Saf.getPersistedPermissionDirectories();
 
-    File ofile = File('/storage/emulated/0/${permission!.first}/${file.path.split('/').last}');
+    File ofile = File(
+        '/storage/emulated/0/${permission!.first}/${file.path.split('/').last}');
 
     await ofile.writeAsBytes(await file.readAsBytes());
+    NotificationApi().showNotification(
+        title: 'Download Success',
+        body:
+            'The file has been saved to: /storage/emulated/0/${permission.first}/${file.path.split('/').last}',
+        payload: '',
+        id: 0);
   }
 
   Future<void> requestPermission() async {

@@ -8,9 +8,11 @@ import 'package:path_provider/path_provider.dart';
 import 'config/routes/routes.dart';
 import 'modules/common/logic/theme_cubit.dart';
 import 'modules/dashboard/screens/dashboard_screens.dart';
+import 'utils/services/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationApi().initNotification();
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
         ? HydratedStorage.webStorageDirectory

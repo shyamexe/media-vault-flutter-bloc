@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mediavault/utils/helpers/file_helper.dart';
+import 'package:mediavault/utils/services/notification_service.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -52,6 +53,11 @@ class FileFinderBloc extends Bloc<FileFinderEvent, FileFinderState> {
       DeleteFileFinderEvent event, Emitter<FileFinderState> emit) async {
     try {
       await event.file.delete();
+       NotificationApi().showNotification(
+        title: 'File deleted',
+        body: 'The ${event.file.path.split('/').last} file has been deleted from the application',
+        payload: '',
+        id: 0);
       await load(event, emit);
     } catch (e) {
       emit(const FileFinderFailure());

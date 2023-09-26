@@ -1,12 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:pdfx/pdfx.dart';
 
 import '../../logic/encript_bloc/encript_bloc.dart';
 import '../../logic/file_finder/file_finder_bloc.dart';
@@ -15,14 +10,14 @@ import 'document_tile_widget.dart';
 class DocList extends StatelessWidget {
   const DocList({super.key});
 
-  Future<Uint8List> _renderPdf(filePath) async {
-    final document = await PdfDocument.openFile(filePath);
-    final page = await document.getPage(1);
-    final image = await page.render(width: page.width, height: page.height);
-    await page.close();
-    await document.close();
-    return image!.bytes;
-  }
+  // Future<Uint8List> _renderPdf(filePath) async {
+  //   final document = await PdfDocument.openFile(filePath);
+  //   final page = await document.getPage(1);
+  //   final image = await page.render(width: page.width, height: page.height);
+  //   await page.close();
+  //   await document.close();
+  //   return image!.bytes;
+  // }
 
   @override
   Widget build(BuildContext context) {

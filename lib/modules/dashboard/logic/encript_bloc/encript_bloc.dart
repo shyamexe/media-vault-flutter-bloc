@@ -14,10 +14,6 @@ class EncriptBloc extends Bloc<EncriptEvent, EncriptState> {
     on<EncryptFilesEvent>((event, emit) async {
       try {
         emit(const EncriptLoading(title: null));
-
-        await Future.delayed(const Duration(seconds: 3));
-        // final Directory directory = await getApplicationDocumentsDirectory();
-
         FilePickerResult? result =
             await FileHelper().openFiles(type: event.type);
         emit(const EncriptLoading(title: 'files Loaded'));

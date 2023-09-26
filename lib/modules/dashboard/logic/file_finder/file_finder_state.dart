@@ -16,7 +16,7 @@ class FileFinderLoaded extends FileFinderState {
   final List<FileSystemEntity> imagefiles;
   final List<FileSystemEntity> videofiles;
   final List<FileSystemEntity> docfiles;
-  FileFinderLoaded({
+  const FileFinderLoaded({
     required this.imagefiles,
     required this.videofiles,
     required this.docfiles,
@@ -27,7 +27,7 @@ class FileFinderLoaded extends FileFinderState {
 
 class FileFinderFailure extends FileFinderState {
   final String? error;
-  FileFinderFailure({
+  const FileFinderFailure({
     this.error,
   });
 

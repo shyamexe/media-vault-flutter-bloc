@@ -20,8 +20,6 @@ class EncriptLoading extends EncriptState {
   List<Object?> get props => [title];
 }
 
-class EncriptLoaded extends EncriptState {
-  // final FilePickerResult? files;
-}
+class EncriptLoaded extends EncriptState {}
 
 final class EncriptFailure extends EncriptState {}

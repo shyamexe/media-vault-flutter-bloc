@@ -1,10 +1,9 @@
 import 'dart:io';
 
-import 'package:encrypt/encrypt.dart';
-import 'package:flutter/foundation.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:saf/saf.dart';
 
 class FileHelper { 
@@ -23,7 +22,9 @@ class FileHelper {
     if (permission?.isEmpty ?? true) {
       await requestPermission();
     }
-    print(permission);
+    if (kDebugMode) {
+      print(permission);
+    }
 
     File ofile = File('/storage/emulated/0/${permission!.first}/${file.path.split('/').last}');
 

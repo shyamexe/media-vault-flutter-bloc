@@ -25,14 +25,14 @@ class FileFinderBloc extends Bloc<FileFinderEvent, FileFinderState> {
     try {
       await load(event, emit);
     } catch (e) {
-      emit(FileFinderFailure());
+      emit(const FileFinderFailure());
     }
   }
   _downloadFiles(DownloadFileFinderEvent event, Emitter<FileFinderState> emit) async {
     try {
      await FileHelper().saveFileToDownloads(File(event.file.path));
     } catch (e) {
-      emit(FileFinderFailure());
+      emit(const FileFinderFailure());
     }
   }
 
@@ -54,7 +54,7 @@ class FileFinderBloc extends Bloc<FileFinderEvent, FileFinderState> {
       await event.file.delete();
       await load(event, emit);
     } catch (e) {
-      emit(FileFinderFailure());
+      emit(const FileFinderFailure());
     }
   }
 
@@ -113,7 +113,7 @@ class FileFinderBloc extends Bloc<FileFinderEvent, FileFinderState> {
       await Future.delayed(const Duration(seconds: 1));
       await load(event, emit);
     } catch (e) {
-      emit(FileFinderFailure());
+      emit(const FileFinderFailure());
     }
   }
 

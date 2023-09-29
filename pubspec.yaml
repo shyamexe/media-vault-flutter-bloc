@@ -40,6 +40,7 @@ dependencies:
   flutter_expandable_fab: ^2.0.0
   flutter_local_notifications: ^15.1.1
   hydrated_bloc: ^9.1.2
+  local_auth: ^2.1.7
   lottie: ^2.6.0
   open_filex: ^4.3.2
   path_provider: ^2.1.1

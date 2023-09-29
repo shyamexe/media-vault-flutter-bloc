@@ -3,9 +3,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mediavault/utils/helpers/file_helper.dart';
-import 'package:mediavault/utils/services/notification_service.dart';
 
 part 'encript_event.dart';
 part 'encript_state.dart';

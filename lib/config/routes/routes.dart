@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mediavault/modules/common/logic/bio_auth_bloc/bio_auth_bloc.dart';
+import 'package:mediavault/modules/common/logic/download_path_cubit.dart';
+import 'package:mediavault/modules/common/logic/theme_cubit.dart';
 import 'package:mediavault/modules/dashboard/logic/encript_bloc/encript_bloc.dart';
 import 'package:mediavault/modules/dashboard/logic/file_finder/file_finder_bloc.dart';
 
+import '../../modules/common/screens/settings.dart';
 import '../../modules/dashboard/screens/dashboard_screens.dart';
+import '../../widgets/Biometric_widget.dart';
 
 /// AppRouter is a class that handles the generation of routes in the app.
 class AppRouter {
@@ -47,16 +52,43 @@ class AppRouter {
     switch (settings.name) {
       case DashBoardScreen.routeName:
         return MaterialPageRoute(
-          builder: (_) => MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => EncriptBloc(),
-              ),
-              BlocProvider(
-                create: (context) => FileFinderBloc(),
-              ),
-            ],
-            child: const DashBoardScreen(),
+          builder: (_) => BlocBuilder<BioAuthBloc, BioAuthState>(
+            builder: (context, state) {
+              return MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => EncriptBloc(),
+                  ),
+                  BlocProvider(
+                    create: (context) => FileFinderBloc(),
+                  ),
+                  BlocProvider.value(
+                    value: context.read<BioAuthBloc>(),
+                  ),
+                ],
+                child: (state is BioAuthSuccess ||state is BioAuthSuspended)
+                    ? const DashBoardScreen()
+                    : const BiometricWidget(),
+              );
+            },
+          ),
+        );
+      case Settings.routeName:
+        return MaterialPageRoute(
+          builder: (_) => BlocBuilder<ThemeCubit, ThemeState>(
+            builder: (context, state) {
+              return MultiBlocProvider(
+                providers: [
+                  BlocProvider.value(
+                    value: context.read<ThemeCubit>(),
+                  ),
+                  BlocProvider(
+                    create: (context) => DownloadPathCubit(),
+                  ),
+                ],
+                child: const Settings(),
+              );
+            },
           ),
         );
       default:

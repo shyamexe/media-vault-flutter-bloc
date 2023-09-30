@@ -8,7 +8,7 @@ import 'package:mediavault/modules/dashboard/logic/file_finder/file_finder_bloc.
 
 import '../../modules/common/screens/settings.dart';
 import '../../modules/dashboard/screens/dashboard_screens.dart';
-import '../../widgets/Biometric_widget.dart';
+import '../../widgets/biometric_widget.dart';
 
 /// AppRouter is a class that handles the generation of routes in the app.
 class AppRouter {

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mediavault/modules/common/logic/theme_cubit.dart';
@@ -33,53 +34,91 @@ class Settings extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(30),
-        child: Column(
-          children: [
-            Card(
-              child: Column(
-                children: [
-                  BlocBuilder<ThemeCubit, ThemeState>(
-                    builder: (context, state) {
-                      return ListTile(
-                          title: const Text('Theme'),
-                          trailing: DropdownMenu<ThemeMode>(
-                            inputDecorationTheme: const InputDecorationTheme(
-                              border: InputBorder.none,
-                            ),
-                            onSelected: (value) {
-                              context
-                                  .read<ThemeCubit>()
-                                  .changeTheme(value ?? ThemeMode.system);
-                            },
-
-                            initialSelection: state
-                                .theme, // Make sure `state.theme` is defined and has a valid value
-                            dropdownMenuEntries: ThemeMode.values
-                                .map<DropdownMenuEntry<ThemeMode>>(
-                                    (ThemeMode value) {
-                              return DropdownMenuEntry<ThemeMode>(
-                                value: value,
-                                label: value.name.toString(),
-                              );
-                            }).toList(),
-                          ));
-                    },
+        child: BlocBuilder<DownloadPathCubit, DownloadPathState>(
+          builder: (context, pathState) {
+            return Column(
+              children: [
+                Card(
+                  child: ListTile(
+                    title: const Text('Security Lock'),
+                    trailing: CupertinoSwitch(
+                      value: pathState.isLockEnabled,
+                      onChanged: (value) {
+                        context.read<DownloadPathCubit>().updateLock(value);
+                      },
+                    ),
                   ),
-                  BlocBuilder<DownloadPathCubit, DownloadPathState>(
-                    builder: (context, pathState) {
-                      return ListTile(
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Card(
+                  child: Column(
+                    children: [
+                      BlocBuilder<ThemeCubit, ThemeState>(
+                        builder: (context, state) {
+                          return ListTile(
+                              title: const Text('Theme'),
+                              trailing: DropdownMenu<ThemeMode>(
+                                inputDecorationTheme:
+                                    const InputDecorationTheme(
+                                  border: InputBorder.none,
+                                ),
+                                onSelected: (value) {
+                                  context
+                                      .read<ThemeCubit>()
+                                      .changeTheme(value ?? ThemeMode.system);
+                                },
+
+                                initialSelection: state
+                                    .theme, // Make sure `state.theme` is defined and has a valid value
+                                dropdownMenuEntries: ThemeMode.values
+                                    .map<DropdownMenuEntry<ThemeMode>>(
+                                        (ThemeMode value) {
+                                  return DropdownMenuEntry<ThemeMode>(
+                                    value: value,
+                                    label: value.name.toString(),
+                                  );
+                                }).toList(),
+                              ));
+                        },
+                      ),
+                      ListTile(
                         onTap: () {
                           context.read<DownloadPathCubit>().updatePath();
                         },
                         title: const Text('Downloads folder'),
                         subtitle: Text('~${pathState.path}'),
-                      );
-                    },
-                  )
-                ],
-              ),
-            )
-          ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                // const Card(
+                //   child: ListTile(
+                //     title: Text('Clear Files'),
+                //     subtitle: Text('Delete all secured Files'),
+                //   ),
+                // ),
+                const SizedBox(
+                  height: 60,
+                ),
+                const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text('Built with Flutter'),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    FlutterLogo(),
+                  ],
+                )
+              ],
+            );
+          },
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_storage/get_storage.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
@@ -13,6 +14,7 @@ import 'utils/services/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
   NotificationApi().initNotification();
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
@@ -45,18 +47,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       case AppLifecycleState.inactive:
         {
           // The app has been minimized or switched away from.
-          print('hidden');
           context.read<BioAuthBloc>().add( RemoveBioAuthEvent(time: DateTime.now()));
         }
 
       case AppLifecycleState.resumed:
         {
-          print('hidrteteden');
           context.read<BioAuthBloc>().add(const ResumedBioAuthEvent());
           // The app has been resumed.
         }
       default:
-        print(state);
         break;
     }
   }

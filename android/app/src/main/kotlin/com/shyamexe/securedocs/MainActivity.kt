@@ -1,4 +1,4 @@
-package com.shyamexe.mediavault
+package com.shyamexe.securedocs
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 

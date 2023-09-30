@@ -52,9 +52,18 @@ dependencies:
   share_plus: ^7.1.0
 
 dev_dependencies:
+  rename_app: ^1.3.1
+  flutter_launcher_icons: ^0.13.1
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/logo.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/icon/logo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

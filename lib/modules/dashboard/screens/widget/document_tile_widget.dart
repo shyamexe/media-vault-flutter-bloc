@@ -33,6 +33,13 @@ class DocumentTileWidget extends StatelessWidget {
             ),
             PopupMenuItem(
               onTap: () {
+                context.read<FileFinderBloc>().add(ShareFileFinderEvent(file: file));
+              },
+              value: 1,
+              child: const Text('Share'),
+            ),
+            PopupMenuItem(
+              onTap: () {
                 context
                     .read<FileFinderBloc>()
                     .add(RenameFileFinderEvent(file: file,context: context));

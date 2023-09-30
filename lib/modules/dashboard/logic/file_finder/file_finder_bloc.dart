@@ -9,6 +9,7 @@ import 'package:mediavault/utils/helpers/file_helper.dart';
 import 'package:mediavault/utils/services/notification_service.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 part 'file_finder_event.dart';
 part 'file_finder_state.dart';
@@ -20,6 +21,7 @@ class FileFinderBloc extends Bloc<FileFinderEvent, FileFinderState> {
     on<OpenFileFinderEvent>(_openFile);
     on<RenameFileFinderEvent>(_renameFile);
     on<DownloadFileFinderEvent>(_downloadFiles);
+    on<ShareFileFinderEvent>(_shareFile);
   }
 
   _loadFiles(FileFinderEvent event, Emitter<FileFinderState> emit) async {
@@ -27,6 +29,14 @@ class FileFinderBloc extends Bloc<FileFinderEvent, FileFinderState> {
       await load(event, emit);
     } catch (e) {
       emit(const FileFinderFailure());
+    }
+  }
+  _shareFile(ShareFileFinderEvent event, Emitter<FileFinderState> emit) async {
+    try {
+     await Share.shareXFiles([XFile(event.file.path)],text: 'This file is protected by Media Vault');
+      // await load(event, emit);
+    } catch (e) {
+      // emit(const FileFinderFailure());
     }
   }
   _downloadFiles(DownloadFileFinderEvent event, Emitter<FileFinderState> emit) async {

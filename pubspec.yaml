@@ -49,6 +49,7 @@ dependencies:
   pdfx: ^2.4.0
   permission_handler: null
   saf: ^1.0.3+4
+  share_plus: ^7.1.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

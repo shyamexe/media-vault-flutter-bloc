@@ -1,6 +1,7 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:mediavault/utils/helpers/storage_box.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -67,19 +68,37 @@ class DownloadPathCubit extends Cubit<DownloadPathState> {
     }
   }
 
-  updateLock(bool value) async {
+  updateLock(bool value, BuildContext context) async {
     final LocalAuthentication auth = LocalAuthentication();
     final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
     final bool canAuthenticate =
         canAuthenticateWithBiometrics || await auth.isDeviceSupported();
     if (canAuthenticate) {
-      Storagebox().updateLock(value);
-      emit(DownloadPathInitial(
-          path: state.path, isLockEnabled: Storagebox().isLockEnabled()));
-      emit(DownloadPathState(
-          path: state.path, isLockEnabled: Storagebox().isLockEnabled()));
+      final bool didAuthenticate = await auth.authenticate(
+          localizedReason: 'Please Authenticate to change lock status');
+      // ···
+
+      if (didAuthenticate) {
+        Storagebox().updateLock(value);
+
+        emit(DownloadPathInitial(
+            path: state.path, isLockEnabled: Storagebox().isLockEnabled()));
+        emit(DownloadPathState(
+            path: state.path, isLockEnabled: Storagebox().isLockEnabled()));
+      } else {
+        // ignore: use_build_context_synchronously
+        errorSnack('Failed to enable lock', context);
+      }
     } else {
       AppSettings.openAppSettings(type: AppSettingsType.lockAndPassword);
     }
+  }
+
+  errorSnack(msg, BuildContext context) {
+    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+      SnackBar(
+        content: Text(msg ?? ''),
+      ),
+    );
   }
 }

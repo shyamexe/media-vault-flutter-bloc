@@ -44,7 +44,7 @@ class Settings extends StatelessWidget {
                     trailing: CupertinoSwitch(
                       value: pathState.isLockEnabled,
                       onChanged: (value) {
-                        context.read<DownloadPathCubit>().updateLock(value);
+                        context.read<DownloadPathCubit>().updateLock(value,context);
                       },
                     ),
                   ),

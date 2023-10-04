@@ -73,23 +73,27 @@ class DownloadPathCubit extends Cubit<DownloadPathState> {
     final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
     final bool canAuthenticate =
         canAuthenticateWithBiometrics || await auth.isDeviceSupported();
-    if (canAuthenticate) {
-      final bool didAuthenticate = await auth.authenticate(
-          localizedReason: 'Please Authenticate to change lock status');
-      // ···
+    try {
+      if (canAuthenticate) {
+        final bool didAuthenticate = await auth.authenticate(
+            localizedReason: 'Please Authenticate to change lock status');
+        // ···
 
-      if (didAuthenticate) {
-        Storagebox().updateLock(value);
+        if (didAuthenticate) {
+          Storagebox().updateLock(value);
 
-        emit(DownloadPathInitial(
-            path: state.path, isLockEnabled: Storagebox().isLockEnabled()));
-        emit(DownloadPathState(
-            path: state.path, isLockEnabled: Storagebox().isLockEnabled()));
+          emit(DownloadPathInitial(
+              path: state.path, isLockEnabled: Storagebox().isLockEnabled()));
+          emit(DownloadPathState(
+              path: state.path, isLockEnabled: Storagebox().isLockEnabled()));
+        } else {
+          // ignore: use_build_context_synchronously
+          errorSnack('Failed to enable lock', context);
+        }
       } else {
-        // ignore: use_build_context_synchronously
-        errorSnack('Failed to enable lock', context);
+        AppSettings.openAppSettings(type: AppSettingsType.lockAndPassword);
       }
-    } else {
+    } catch (e) {
       AppSettings.openAppSettings(type: AppSettingsType.lockAndPassword);
     }
   }

@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -17,11 +15,8 @@ void main() async {
   await GetStorage.init();
   NotificationApi().initNotification();
   HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: kIsWeb
-        ? HydratedStorage.webStorageDirectory
-        : await getTemporaryDirectory(),
+    storageDirectory: await getTemporaryDirectory(),
   );
-  // await dotenv.load(fileName: ".env");
   runApp(BlocProvider(
     create: (context) => BioAuthBloc()
       ..add(

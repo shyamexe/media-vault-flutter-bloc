@@ -33,7 +33,8 @@ class FileFinderBloc extends Bloc<FileFinderEvent, FileFinderState> {
   }
   _shareFile(ShareFileFinderEvent event, Emitter<FileFinderState> emit) async {
     try {
-     await Share.shareXFiles([XFile(event.file.path)],text: 'This file is protected by Media Vault');
+
+     await Share.shareXFiles([XFile(event.file.path)],text: 'This file is protected by SecureDocs Manager\nhttp://play.google.com/store/apps/details?id=com.shyamexe.securedocs');
       // await load(event, emit);
     } catch (e) {
       // emit(const FileFinderFailure());
@@ -43,6 +44,7 @@ class FileFinderBloc extends Bloc<FileFinderEvent, FileFinderState> {
     try {
      await FileHelper().saveFileToDownloads(File(event.file.path));
     } catch (e) {
+      
       emit(const FileFinderFailure());
     }
   }

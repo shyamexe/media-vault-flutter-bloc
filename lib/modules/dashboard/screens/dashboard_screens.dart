@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mediavault/modules/common/screens/settings.dart';
 import 'package:mediavault/modules/dashboard/logic/encript_bloc/encript_bloc.dart';
@@ -29,7 +28,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>{
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
-          'Media Vault',
+          'SecureDocs Manager',
           style: Theme.of(context).textTheme.titleLarge,
         ),
         actions: [
@@ -89,7 +88,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>{
           }
         },
       ),
-      floatingActionButtonLocation: ExpandableFab.location,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: const FloatingAddButton(),
     );
   }

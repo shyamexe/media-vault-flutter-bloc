@@ -40,7 +40,7 @@ class ImageList extends StatelessWidget {
                       ),
                       const Text('Nothing To Show'),
                       IconButton(onPressed: () {
-                        context.read<EncriptBloc>().add(const EncryptFilesEvent(type: FileType.image));
+                        context.read<EncriptBloc>().add( EncryptFilesEvent(type: FileType.image,context: context));
                       }, icon: const Icon(Icons.add)),
                       const SizedBox(
                         height: 100,)

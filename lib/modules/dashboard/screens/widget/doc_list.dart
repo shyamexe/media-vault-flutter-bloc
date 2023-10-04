@@ -53,7 +53,7 @@ class DocList extends StatelessWidget {
                       ),
                       const Text('Nothing To Show'),
                       IconButton(onPressed: () {
-                        context.read<EncriptBloc>().add(const EncryptFilesEvent(type: FileType.any));
+                        context.read<EncriptBloc>().add( EncryptFilesEvent(type: FileType.any,context: context));
                       }, icon: const Icon(Icons.add)),
                       const SizedBox(
                         height: 100,)

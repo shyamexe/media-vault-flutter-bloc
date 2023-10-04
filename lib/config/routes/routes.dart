@@ -5,6 +5,7 @@ import 'package:mediavault/modules/common/logic/download_path_cubit.dart';
 import 'package:mediavault/modules/common/logic/theme_cubit.dart';
 import 'package:mediavault/modules/dashboard/logic/encript_bloc/encript_bloc.dart';
 import 'package:mediavault/modules/dashboard/logic/file_finder/file_finder_bloc.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../modules/common/screens/settings.dart';
 import '../../modules/dashboard/screens/dashboard_screens.dart';
@@ -66,7 +67,7 @@ class AppRouter {
                     value: context.read<BioAuthBloc>(),
                   ),
                 ],
-                child: (state is BioAuthSuccess ||state is BioAuthSuspended)
+                child: (state is BioAuthSuccess || state is BioAuthSuspended)
                     ? const DashBoardScreen()
                     : const BiometricWidget(),
               );
@@ -74,8 +75,8 @@ class AppRouter {
           ),
         );
       case Settings.routeName:
-        return MaterialPageRoute(
-          builder: (_) => BlocBuilder<ThemeCubit, ThemeState>(
+        return PageTransition(
+          child: BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, state) {
               return MultiBlocProvider(
                 providers: [
@@ -90,7 +91,28 @@ class AppRouter {
               );
             },
           ),
+          type: PageTransitionType.topToBottom,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOutCirc,
+          settings: settings,
         );
+        // return MaterialPageRoute(
+        //   builder: (_) => BlocBuilder<ThemeCubit, ThemeState>(
+        //     builder: (context, state) {
+        //       return MultiBlocProvider(
+        //         providers: [
+        //           BlocProvider.value(
+        //             value: context.read<ThemeCubit>(),
+        //           ),
+        //           BlocProvider(
+        //             create: (context) => DownloadPathCubit(),
+        //           ),
+        //         ],
+        //         child: const Settings(),
+        //       );
+        //     },
+        //   ),
+        // );
       default:
         throw const Scaffold(
           body: Center(

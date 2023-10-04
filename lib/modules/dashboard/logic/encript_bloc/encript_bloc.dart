@@ -3,9 +3,8 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter/material.dart';
 import 'package:mediavault/utils/helpers/file_helper.dart';
-import 'package:mediavault/utils/services/notification_service.dart';
 
 part 'encript_event.dart';
 part 'encript_state.dart';
@@ -31,7 +30,13 @@ class EncriptBloc extends Bloc<EncriptEvent, EncriptState> {
                     'file encripted: ${result.files[i].name} ($i/${result.files.length})'));
           }
           emit(EncriptLoaded());
-          // NotificationApi().showNotification(
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(event.context).showSnackBar(
+            SnackBar(
+              content: Text('The file has been secured in the ${event.type.index==0?'Documents tab':'${event.type.name} Tab'}')
+            )
+          );
+                    // NotificationApi().showNotification(
           //       title: 'File Secured', body: 'The file has been secured in the media vault', payload: '', id: 0);
         } else {
           emit(EncriptFailure());

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mediavault/modules/common/screens/settings.dart';
 import 'package:mediavault/modules/dashboard/logic/encript_bloc/encript_bloc.dart';
 
 import '../logic/file_finder/file_finder_bloc.dart';
@@ -16,21 +16,35 @@ class DashBoardScreen extends StatefulWidget {
   State<DashBoardScreen> createState() => _DashBoardScreenState();
 }
 
-class _DashBoardScreenState extends State<DashBoardScreen> {
-  @override
+class _DashBoardScreenState extends State<DashBoardScreen>{
+   @override
   void initState() {
     context.read<FileFinderBloc>().add(const LoadFileFinderEvent());
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
-          'Media Vault',
+          'SecureDocs Manager',
           style: Theme.of(context).textTheme.titleLarge,
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                Settings.routeName,
+              );
+            },
+            icon: Icon(
+              Icons.settings_outlined,
+              color: Theme.of(context).iconTheme.color,
+            ),
+          )
+        ],
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
@@ -74,7 +88,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           }
         },
       ),
-      floatingActionButtonLocation: ExpandableFab.location,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: const FloatingAddButton(),
     );
   }

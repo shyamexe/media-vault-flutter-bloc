@@ -42,6 +42,15 @@ class DownloadFileFinderEvent extends FileFinderEvent {
   @override
   List<Object> get props => [file];
 }
+class ShareFileFinderEvent extends FileFinderEvent {
+  final FileSystemEntity file;
+  const ShareFileFinderEvent({
+    required this.file,
+  });
+
+  @override
+  List<Object> get props => [file];
+}
 class RenameFileFinderEvent extends FileFinderEvent {
   final FileSystemEntity file;
   final BuildContext context;

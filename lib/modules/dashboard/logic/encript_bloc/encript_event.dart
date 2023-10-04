@@ -10,11 +10,13 @@ sealed class EncriptEvent extends Equatable {
 
 class EncryptFilesEvent extends EncriptEvent {
   final FileType type;
+  final BuildContext context;
   const EncryptFilesEvent({
     required this.type,
+    required this.context
   });
 
   @override
-  List<Object> get props => [type];
+  List<Object> get props => [type,context];
 
 }

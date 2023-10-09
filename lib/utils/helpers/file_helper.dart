@@ -23,9 +23,6 @@ class FileHelper {
     if (permission?.isEmpty ?? true) {
       await requestPermission();
     }
-    if (kDebugMode) {
-      print(permission);
-    }
     permission = await Saf.getPersistedPermissionDirectories();
 
     File ofile = File(

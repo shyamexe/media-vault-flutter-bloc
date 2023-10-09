@@ -32,13 +32,7 @@ class BioAuthBloc extends Bloc<BioAuthEvent, BioAuthState> {
   }
 
   _resumeBio(ResumedBioAuthEvent event, Emitter<BioAuthState> emit) async {
-    if (kDebugMode) {
-      print(state);
-    }
     if (state is BioAuthSuspended) {
-      if (kDebugMode) {
-        print('inactive: ${(state as BioAuthSuspended).time.difference(DateTime.now()).inSeconds.abs()}sec');
-      }
       
     if ( DateTime.now().difference((state as BioAuthSuspended).time).inSeconds.abs() >=
             60) {

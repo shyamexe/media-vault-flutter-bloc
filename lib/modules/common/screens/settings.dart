@@ -39,14 +39,41 @@ class Settings extends StatelessWidget {
             return Column(
               children: [
                 Card(
-                  child: ListTile(
-                    title: const Text('Security Lock'),
-                    trailing: CupertinoSwitch(
-                      value: pathState.isLockEnabled,
-                      onChanged: (value) {
-                        context.read<DownloadPathCubit>().updateLock(value,context);
-                      },
-                    ),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: const Text('Security Lock'),
+                        trailing: CupertinoSwitch(
+                          value: pathState.isLockEnabled,
+                          onChanged: (value) {
+                            context
+                                .read<DownloadPathCubit>()
+                                .updateLock(value, context);
+                          },
+                        ),
+                      ),
+                      ListTile(
+                         
+                        title: const Text('Automatically lock'),
+                        trailing: DropdownButton(
+                          underline: const SizedBox(),
+                          value: pathState.lockTime,
+                          items: [10, 30, 60, 80]
+                              .map<DropdownMenuItem>(
+                                (e) => DropdownMenuItem(
+                                  value: e,
+                                  child: Text(
+                                    'After $e Sec',
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (value) {
+                            context.read<DownloadPathCubit>().updateLockTime(value);
+                          },
+                        ),
+                      )
+                    ],
                   ),
                 ),
                 const SizedBox(
@@ -59,28 +86,46 @@ class Settings extends StatelessWidget {
                         builder: (context, state) {
                           return ListTile(
                               title: const Text('Theme'),
-                              trailing: DropdownMenu<ThemeMode>(
-                                inputDecorationTheme:
-                                    const InputDecorationTheme(
-                                  border: InputBorder.none,
-                                ),
-                                onSelected: (value) {
+                              trailing: DropdownButton<ThemeMode>(
+                                underline: const SizedBox(),
+                                value: state.theme,
+                                onChanged: (value) {
                                   context
                                       .read<ThemeCubit>()
                                       .changeTheme(value ?? ThemeMode.system);
                                 },
-
-                                initialSelection: state
-                                    .theme, // Make sure `state.theme` is defined and has a valid value
-                                dropdownMenuEntries: ThemeMode.values
-                                    .map<DropdownMenuEntry<ThemeMode>>(
+                                items: ThemeMode.values
+                                    .map<DropdownMenuItem<ThemeMode>>(
                                         (ThemeMode value) {
-                                  return DropdownMenuEntry<ThemeMode>(
+                                  return DropdownMenuItem<ThemeMode>(
                                     value: value,
-                                    label: value.name.toString(),
+                                    child:Text(value.name.toString()),
                                   );
                                 }).toList(),
-                              ));
+
+                                ),
+                              // trailing: DropdownMenu<ThemeMode>(
+                              //   inputDecorationTheme:
+                              //       const InputDecorationTheme(
+                              //     border: InputBorder.none,
+                              //   ),
+                              //   onSelected: (value) {
+                              //     context
+                              //         .read<ThemeCubit>()
+                              //         .changeTheme(value ?? ThemeMode.system);
+                              //   },
+                              //   initialSelection: state
+                              //       .theme, // Make sure `state.theme` is defined and has a valid value
+                              //   dropdownMenuEntries: ThemeMode.values
+                              //       .map<DropdownMenuEntry<ThemeMode>>(
+                              //           (ThemeMode value) {
+                              //     return DropdownMenuEntry<ThemeMode>(
+                              //       value: value,
+                              //       label: value.name.toString(),
+                              //     );
+                              //   }).toList(),
+                              // )
+                              );
                         },
                       ),
                       ListTile(

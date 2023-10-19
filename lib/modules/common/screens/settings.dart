@@ -39,41 +39,44 @@ class Settings extends StatelessWidget {
             return Column(
               children: [
                 Card(
-                  child: Column(
-                    children: [
-                      ListTile(
-                        title: const Text('Security Lock'),
-                        trailing: CupertinoSwitch(
-                          value: pathState.isLockEnabled,
-                          onChanged: (value) {
-                            context
-                                .read<DownloadPathCubit>()
-                                .updateLock(value, context);
-                          },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 500),
+                    child: Column(
+                      children: [
+                        ListTile(
+                          title: const Text('Security Lock'),
+                          trailing: CupertinoSwitch(
+                            value: pathState.isLockEnabled,
+                            onChanged: (value) {
+                              context
+                                  .read<DownloadPathCubit>()
+                                  .updateLock(value, context);
+                            },
+                          ),
                         ),
-                      ),
-                      ListTile(
-                         
-                        title: const Text('Automatically lock'),
-                        trailing: DropdownButton(
-                          underline: const SizedBox(),
-                          value: pathState.lockTime,
-                          items: [10, 30, 60, 80]
-                              .map<DropdownMenuItem>(
-                                (e) => DropdownMenuItem(
-                                  value: e,
-                                  child: Text(
-                                    'After $e Sec',
+                        if(pathState.isLockEnabled)ListTile(
+                           
+                          title: const Text('Automatically lock'),
+                          trailing: DropdownButton(
+                            underline: const SizedBox(),
+                            value: pathState.lockTime,
+                            items: [3,30, 60, 80]
+                                .map<DropdownMenuItem>(
+                                  (e) => DropdownMenuItem(
+                                    value: e,
+                                    child: Text(
+                                     e==3?'Immediately': 'After $e Sec',
+                                    ),
                                   ),
-                                ),
-                              )
-                              .toList(),
-                          onChanged: (value) {
-                            context.read<DownloadPathCubit>().updateLockTime(value);
-                          },
-                        ),
-                      )
-                    ],
+                                )
+                                .toList(),
+                            onChanged: (value) {
+                              context.read<DownloadPathCubit>().updateLockTime(value);
+                            },
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(

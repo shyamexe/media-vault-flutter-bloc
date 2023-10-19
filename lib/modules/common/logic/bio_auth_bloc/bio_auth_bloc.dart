@@ -33,9 +33,9 @@ class BioAuthBloc extends Bloc<BioAuthEvent, BioAuthState> {
 
   _resumeBio(ResumedBioAuthEvent event, Emitter<BioAuthState> emit) async {
     if (state is BioAuthSuspended) {
-      
+      print('------- ${DateTime.now().difference((state as BioAuthSuspended).time).inSeconds.abs()} ');
     if ( DateTime.now().difference((state as BioAuthSuspended).time).inSeconds.abs() >=
-            60) {
+            Storagebox().getLockTime()) {
       try {
         emit(BioAuthLoading());
         final LocalAuthentication auth = LocalAuthentication();

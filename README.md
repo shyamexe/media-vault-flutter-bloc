@@ -1,6 +1,6 @@
-# SecureDocs Manager: Easily Organize and Manage Your Files, Offline or Online
+# SecureDocs Manager: Easily Organize and Manage Your Files, Offline
 
-### SecureDocs Manager is the most secure and convenient way to store and manage your files, offline or online. With SecureDocs Manager, you can:
+### SecureDocs Manager is the most secure and convenient way to store and manage your files, offline. With SecureDocs Manager, you can:
 
 - Store your sensitive documents, images, and videos in a secure vault that is protected by military-grade encryption.
 - Easily organize and manage your files with powerful search and filtering features.

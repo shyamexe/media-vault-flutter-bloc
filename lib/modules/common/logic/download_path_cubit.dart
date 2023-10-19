@@ -9,25 +9,31 @@ import 'package:saf/saf.dart';
 
 class DownloadPathState extends Equatable {
   final String path;
+  final int lockTime;
   final bool isLockEnabled;
   const DownloadPathState({
     required this.path,
+    required this.lockTime,
     required this.isLockEnabled,
   });
 
   @override
-  List<Object> get props => [path];
+  List<Object> get props => [path, lockTime, isLockEnabled];
 }
 
 final class DownloadPathInitial extends DownloadPathState {
   const DownloadPathInitial(
-      {required super.path, required super.isLockEnabled});
+      {required super.path,
+      required super.isLockEnabled,
+      required super.lockTime});
 }
 
 class DownloadPathCubit extends Cubit<DownloadPathState> {
   DownloadPathCubit()
       : super(DownloadPathInitial(
-            path: '', isLockEnabled: Storagebox().isLockEnabled())) {
+            lockTime: Storagebox().getLockTime(),
+            path: '',
+            isLockEnabled: Storagebox().isLockEnabled())) {
     loadPath();
   }
 
@@ -35,11 +41,14 @@ class DownloadPathCubit extends Cubit<DownloadPathState> {
     List<String>? paths = await Saf.getPersistedPermissionDirectories();
     if (paths?.isNotEmpty ?? false) {
       emit(DownloadPathState(
+          lockTime: Storagebox().getLockTime(),
           path: paths?.first ?? 'n/a',
           isLockEnabled: Storagebox().isLockEnabled()));
     } else {
       emit(DownloadPathState(
-          path: 'n/a', isLockEnabled: Storagebox().isLockEnabled()));
+          lockTime: Storagebox().getLockTime(),
+          path: 'n/a',
+          isLockEnabled: Storagebox().isLockEnabled()));
     }
   }
 
@@ -56,15 +65,20 @@ class DownloadPathCubit extends Cubit<DownloadPathState> {
 
       if (paths?.isNotEmpty ?? false) {
         emit(DownloadPathState(
+            lockTime: Storagebox().getLockTime(),
             path: paths?.first ?? 'n/a',
             isLockEnabled: Storagebox().isLockEnabled()));
       } else {
         emit(DownloadPathState(
-            path: 'n/a', isLockEnabled: Storagebox().isLockEnabled()));
+            lockTime: Storagebox().getLockTime(),
+            path: 'n/a',
+            isLockEnabled: Storagebox().isLockEnabled()));
       }
     } else {
       emit(DownloadPathState(
-          path: 'n/a', isLockEnabled: Storagebox().isLockEnabled()));
+          lockTime: Storagebox().getLockTime(),
+          path: 'n/a',
+          isLockEnabled: Storagebox().isLockEnabled()));
     }
   }
 
@@ -83,9 +97,13 @@ class DownloadPathCubit extends Cubit<DownloadPathState> {
           Storagebox().updateLock(value);
 
           emit(DownloadPathInitial(
-              path: state.path, isLockEnabled: Storagebox().isLockEnabled()));
+              lockTime: Storagebox().getLockTime(),
+              path: state.path,
+              isLockEnabled: Storagebox().isLockEnabled()));
           emit(DownloadPathState(
-              path: state.path, isLockEnabled: Storagebox().isLockEnabled()));
+              lockTime: Storagebox().getLockTime(),
+              path: state.path,
+              isLockEnabled: Storagebox().isLockEnabled()));
         } else {
           // ignore: use_build_context_synchronously
           errorSnack('Failed to enable lock', context);
@@ -96,6 +114,14 @@ class DownloadPathCubit extends Cubit<DownloadPathState> {
     } catch (e) {
       AppSettings.openAppSettings(type: AppSettingsType.lockAndPassword);
     }
+  }
+
+  updateLockTime(int time) async {
+    Storagebox().updateLockTime(time);
+    emit(DownloadPathState(
+        lockTime: time,
+        path: state.path,
+        isLockEnabled: Storagebox().isLockEnabled(),),);
   }
 
   errorSnack(msg, BuildContext context) {

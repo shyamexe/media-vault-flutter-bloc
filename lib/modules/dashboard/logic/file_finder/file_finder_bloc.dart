@@ -50,14 +50,8 @@ class FileFinderBloc extends Bloc<FileFinderEvent, FileFinderState> {
   }
 
   _openFile(OpenFileFinderEvent event, Emitter<FileFinderState> emit) async {
-    if (kDebugMode) {
-      print(event.file.path);
-    }
     File oFile =
         await FileHelper().decryptFileRwa(event.file, 'dotenv.env[key32bit]');
-    if (kDebugMode) {
-      print(oFile.path);
-    }
     OpenFilex.open(oFile.path);
   }
 

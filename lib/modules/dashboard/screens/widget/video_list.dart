@@ -15,19 +15,23 @@ class VideoList extends StatelessWidget {
     return BlocBuilder<FileFinderBloc, FileFinderState>(
       builder: (context, state) {
         if (state is FileFinderLoaded) {
-          return state.videofiles.isNotEmpty? RefreshIndicator(
-            onRefresh: () async {
-              context.read<FileFinderBloc>().add(const LoadFileFinderEvent());
-            },
-            child: ListView.builder(
-              itemCount: state.videofiles.length,
-              padding: const EdgeInsets.all(30),
-              itemBuilder: (context, index) =>DocumentTileWidget(
-                icon: Icons.movie_creation_outlined,
-                  file: state.videofiles[index],
-                ),
-            ),
-          ): Center(
+          return state.videofiles.isNotEmpty
+              ? RefreshIndicator(
+                  onRefresh: () async {
+                    context
+                        .read<FileFinderBloc>()
+                        .add(const LoadFileFinderEvent());
+                  },
+                  child: ListView.builder(
+                    itemCount: state.videofiles.length,
+                    padding: const EdgeInsets.all(30),
+                    itemBuilder: (context, index) => DocumentTileWidget(
+                      icon: Icons.movie_creation_outlined,
+                      file: state.videofiles[index],
+                    ),
+                  ),
+                )
+              : Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
@@ -38,12 +42,27 @@ class VideoList extends StatelessWidget {
                         child: Lottie.asset('assets/animations/nodata.json',
                             fit: BoxFit.fitHeight),
                       ),
-                      const Text('Nothing To Show'),
-                      IconButton(onPressed: () {
-                        context.read<EncriptBloc>().add( EncryptFilesEvent(type: FileType.video ,context: context));
-                      }, icon: const Icon(Icons.add)),
+                      Text(
+                        'Nothing To Show',
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
                       const SizedBox(
-                        height: 100,)
+                        height: 30,
+                      ),
+                      TextButton.icon(
+                        label: const Text('Add videos'),
+                        style: TextButton.styleFrom(
+                            foregroundColor:
+                                Theme.of(context).textTheme.titleLarge?.color),
+                        onPressed: () {
+                          context.read<EncriptBloc>().add(EncryptFilesEvent(
+                              type: FileType.video, context: context));
+                        },
+                        icon: const Icon(Icons.add),
+                      ),
+                      const SizedBox(
+                        height: 100,
+                      )
                     ],
                   ),
                 );
@@ -60,7 +79,8 @@ class VideoList extends StatelessWidget {
                   child: Lottie.asset('assets/animations/loding.json',
                       fit: BoxFit.fitHeight),
                 ),
-                if(state is FileFinderFailure && state.error!=null)Text(state.error??''),
+                if (state is FileFinderFailure && state.error != null)
+                  Text(state.error ?? ''),
                 IconButton(
                     onPressed: () {
                       context

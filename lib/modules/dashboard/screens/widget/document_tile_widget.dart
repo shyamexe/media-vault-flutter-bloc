@@ -16,17 +16,17 @@ Widget switchWithInt(String? value){
     switch(value){
  
       case '(video)' :
-      return Icon(Icons.movie_creation_outlined);
+      return const Icon(Icons.movie_creation_outlined);
  
       case '(image)' :
-      return Icon(Icons.image_outlined);
+      return const Icon(Icons.image_outlined);
  
       case '(audio)':
-      return Icon(Icons.audiotrack_rounded);
+      return const Icon(Icons.audiotrack_rounded);
  
  
       default :
-      return Icon(Icons.insert_drive_file_outlined);
+      return const Icon(Icons.insert_drive_file_outlined);
  
     }
   }

@@ -38,8 +38,18 @@ class ImageList extends StatelessWidget {
                         child: Lottie.asset('assets/animations/nodata.json',
                             fit: BoxFit.fitHeight),
                       ),
-                      const Text('Nothing To Show'),
-                      IconButton(onPressed: () {
+                      Text(
+                        'Nothing To Show',
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      TextButton.icon(
+                        label: const Text('Add images'),
+                        style: TextButton.styleFrom(
+                            foregroundColor:
+                                Theme.of(context).textTheme.titleLarge?.color),onPressed: () {
                         context.read<EncriptBloc>().add( EncryptFilesEvent(type: FileType.image,context: context));
                       }, icon: const Icon(Icons.add)),
                       const SizedBox(

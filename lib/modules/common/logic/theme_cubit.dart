@@ -21,11 +21,11 @@ class ThemeState extends Equatable {
   }
 
   factory ThemeState.fromMap(Map<String, dynamic> map) {
-    if (map['theme'] == ThemeMode.dark) {
+    if (map['theme'] == ThemeMode.dark.name) {
       return const ThemeState(
         ThemeMode.dark,
       );
-    } else if (map['theme'] == ThemeMode.light) {
+    } else if (map['theme'] == ThemeMode.light.name) {
       return const ThemeState(
         ThemeMode.light,
       );

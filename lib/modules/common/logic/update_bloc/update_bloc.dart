@@ -35,8 +35,6 @@ class UpdateBloc extends Bloc<UpdateEvent, UpdateState> {
     // The update will now be downloaded in the background.
     final AppUpdateResult result= await InAppUpdate.startFlexibleUpdate();
      // Complete a flexible update.
-     print(result.name);
-     print(result);
      if (result.name== 'success') {
        emit(UpdateInflexible());
      }

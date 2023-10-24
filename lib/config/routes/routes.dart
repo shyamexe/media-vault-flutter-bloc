@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mediavault/modules/common/logic/bio_auth_bloc/bio_auth_bloc.dart';
 import 'package:mediavault/modules/common/logic/download_path_cubit.dart';
 import 'package:mediavault/modules/common/logic/theme_cubit.dart';
+import 'package:mediavault/modules/common/logic/update_bloc/update_bloc.dart';
 import 'package:mediavault/modules/dashboard/logic/encript_bloc/encript_bloc.dart';
 import 'package:mediavault/modules/dashboard/logic/file_finder/file_finder_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -58,6 +59,12 @@ class AppRouter {
               return MultiBlocProvider(
                 providers: [
                   BlocProvider(
+                    create: (context) => UpdateBloc()
+                      ..add(
+                        const CheckUpdateEvent(),
+                      ),
+                  ),
+                  BlocProvider(
                     create: (context) => EncriptBloc(),
                   ),
                   BlocProvider(
@@ -96,23 +103,23 @@ class AppRouter {
           curve: Curves.easeInOutCirc,
           settings: settings,
         );
-        // return MaterialPageRoute(
-        //   builder: (_) => BlocBuilder<ThemeCubit, ThemeState>(
-        //     builder: (context, state) {
-        //       return MultiBlocProvider(
-        //         providers: [
-        //           BlocProvider.value(
-        //             value: context.read<ThemeCubit>(),
-        //           ),
-        //           BlocProvider(
-        //             create: (context) => DownloadPathCubit(),
-        //           ),
-        //         ],
-        //         child: const Settings(),
-        //       );
-        //     },
-        //   ),
-        // );
+      // return MaterialPageRoute(
+      //   builder: (_) => BlocBuilder<ThemeCubit, ThemeState>(
+      //     builder: (context, state) {
+      //       return MultiBlocProvider(
+      //         providers: [
+      //           BlocProvider.value(
+      //             value: context.read<ThemeCubit>(),
+      //           ),
+      //           BlocProvider(
+      //             create: (context) => DownloadPathCubit(),
+      //           ),
+      //         ],
+      //         child: const Settings(),
+      //       );
+      //     },
+      //   ),
+      // );
       default:
         throw const Scaffold(
           body: Center(

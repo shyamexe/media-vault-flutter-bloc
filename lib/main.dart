@@ -42,7 +42,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       case AppLifecycleState.inactive:
         {
           // The app has been minimized or switched away from.
-          context.read<BioAuthBloc>().add( RemoveBioAuthEvent(time: DateTime.now()));
+          context
+              .read<BioAuthBloc>()
+              .add(RemoveBioAuthEvent(time: DateTime.now()));
         }
 
       case AppLifecycleState.resumed:
@@ -69,8 +71,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ThemeCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ThemeCubit(),
+        ),
+        
+      ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
           return MaterialApp(

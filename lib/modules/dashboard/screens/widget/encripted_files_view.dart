@@ -12,13 +12,12 @@ class EncriptedFilesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
+    return const DefaultTabController(
       length: 3,
       child: Column(
         children: [
           TabBar(
-            labelColor: Theme.of(context).indicatorColor,
-            tabs: const [
+            tabs: [
               Tab(
                 text: 'Images',
               ),
@@ -30,7 +29,7 @@ class EncriptedFilesView extends StatelessWidget {
               ),
             ],
           ),
-          const Expanded(
+          Expanded(
             child: TabBarView(
               children: [
                 ImageList(),

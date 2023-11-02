@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 
 import 'config/routes/routes.dart';
 import 'modules/common/logic/bio_auth_bloc/bio_auth_bloc.dart';
@@ -80,13 +81,23 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
-          return MaterialApp(
-            themeMode: state.theme,
-            theme: ThemeData.light(),
-            darkTheme: ThemeData.dark(),
-            debugShowCheckedModeBanner: false,
-            initialRoute: DashBoardScreen.routeName,
-            onGenerateRoute: AppRouter.onGenerateRoute,
+          return DynamicColorBuilder(
+            builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+              return MaterialApp(
+                themeMode: state.theme,
+                theme: ThemeData.light().copyWith(
+                  useMaterial3: true,
+                  colorScheme: lightDynamic
+                ),
+                darkTheme: ThemeData.dark().copyWith(
+                  useMaterial3: true,
+                  colorScheme: darkDynamic
+                ),
+                debugShowCheckedModeBanner: false,
+                initialRoute: DashBoardScreen.routeName,
+                onGenerateRoute: AppRouter.onGenerateRoute,
+              );
+            }
           );
         },
       ),

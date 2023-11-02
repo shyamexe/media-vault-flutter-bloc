@@ -51,9 +51,6 @@ class VideoList extends StatelessWidget {
                       ),
                       TextButton.icon(
                         label: const Text('Add videos'),
-                        style: TextButton.styleFrom(
-                            foregroundColor:
-                                Theme.of(context).textTheme.titleLarge?.color),
                         onPressed: () {
                           context.read<EncriptBloc>().add(EncryptFilesEvent(
                               type: FileType.video, context: context));

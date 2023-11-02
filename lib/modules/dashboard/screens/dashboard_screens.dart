@@ -110,8 +110,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         return PieCanvas(
           theme: PieTheme(
             buttonTheme: PieButtonTheme(
-                backgroundColor: Theme.of(context).secondaryHeaderColor,
-                iconColor: Theme.of(context).dividerColor),
+                backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+                iconColor: Theme.of(context).colorScheme.onSecondaryContainer
+                ),
             pointerColor: Colors.transparent,
             delayDuration: Duration.zero,
             tooltipTextStyle: Theme.of(context).textTheme.headlineLarge,
@@ -149,8 +150,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ),
                 )
               ],
-              elevation: 0,
               backgroundColor: Colors.transparent,
+              elevation: 0,
             ),
             body: BlocConsumer<EncriptBloc, EncriptState>(
               listener: (context, state) {

@@ -47,9 +47,7 @@ class ImageList extends StatelessWidget {
                       ),
                       TextButton.icon(
                         label: const Text('Add images'),
-                        style: TextButton.styleFrom(
-                            foregroundColor:
-                                Theme.of(context).textTheme.titleLarge?.color),onPressed: () {
+                       onPressed: () {
                         context.read<EncriptBloc>().add( EncryptFilesEvent(type: FileType.image,context: context));
                       }, icon: const Icon(Icons.add)),
                       const SizedBox(

@@ -59,10 +59,7 @@ class DocList extends StatelessWidget {
                         height: 30,
                       ),
                       TextButton.icon(
-                        label: const Text('Add documents'),
-                        style: TextButton.styleFrom(
-                            foregroundColor:
-                                Theme.of(context).textTheme.titleLarge?.color),onPressed: () {
+                        label: const Text('Add documents'),onPressed: () {
                         context.read<EncriptBloc>().add( EncryptFilesEvent(type: FileType.any,context: context));
                       }, icon: const Icon(Icons.add)),
                       const SizedBox(

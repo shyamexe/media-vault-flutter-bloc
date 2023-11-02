@@ -15,7 +15,7 @@ class FloatingAddButton extends StatelessWidget {
       child: PieMenu(
         actions: [
           PieAction(
-            tooltip: const Text('Add Documents'), 
+            tooltip:  Text('Add Documents',style: TextStyle(color: Theme.of(context).colorScheme.primary),), 
             onSelect: (){
                 context.read<EncriptBloc>().add( EncryptFilesEvent(type: FileType.any,context: context));
             }, 
@@ -25,7 +25,7 @@ class FloatingAddButton extends StatelessWidget {
             ),),
           PieAction(
 
-            tooltip: const Text('Add Images'), 
+            tooltip:  Text('Add Images',style: TextStyle(color: Theme.of(context).colorScheme.primary)), 
             onSelect: (){
                 context.read<EncriptBloc>().add( EncryptFilesEvent(type: FileType.image, context: context));
             }, 
@@ -34,7 +34,7 @@ class FloatingAddButton extends StatelessWidget {
               color: Theme.of(context).iconTheme.color,
             ),),
           PieAction(
-            tooltip: const Text('Add Videos'), 
+            tooltip:  Text('Add Videos',style: TextStyle(color: Theme.of(context).colorScheme.primary)), 
             onSelect: (){
                 context.read<EncriptBloc>().add( EncryptFilesEvent(type: FileType.video,context: context));
             }, 

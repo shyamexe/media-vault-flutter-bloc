@@ -45,7 +45,7 @@ class Settings extends StatelessWidget {
                       children: [
                         ListTile(
                           title: const Text('Security Lock'),
-                          trailing: CupertinoSwitch(
+                          trailing: Switch(
                             value: pathState.isLockEnabled,
                             onChanged: (value) {
                               context
